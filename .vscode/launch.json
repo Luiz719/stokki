@@ -1,0 +1,27 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		
+
+		{
+			"name": "Flutter (web-server)",
+			"request": "launch",
+			"type": "dart",
+			"program": "lib/main.dart",
+			"args": [
+				"-d",
+				"web-server"
+			]
+		},
+		{
+			"name": "Flutter (chrome)",
+			"request": "launch",
+			"type": "dart",
+			"program": "lib/main.dart",
+			"args": [
+				"-d",
+				"chrome"
+			]
+		}
+	]
+}
