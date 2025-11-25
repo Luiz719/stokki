@@ -23,6 +23,11 @@ class ShoppingitemRepository {
     return results.map((doc) => Shoppingitem.fromDocument(doc)).toList();
   }
 
+  Future<List<Shoppingitem>> findByListId(int listId) async {
+    final results = await _supabase.from('ShoppingItem').select().eq('listId', listId);
+    return results.map((doc) => Shoppingitem.fromDocument(doc)).toList();
+  }
+
   Future<Shoppingitem> insert(Shoppingitem shoppingitem) async {
     final shoppingitemData = shoppingitem.toJson()..remove('id');
     final results = await _supabase.from('ShoppingItem').insert(shoppingitemData).select();

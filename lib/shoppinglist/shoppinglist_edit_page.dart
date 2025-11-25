@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stokki/shoppingitem/shoppingitem.dart';
-import 'package:stokki/shoppingitem/shoppingitem_edit_viewmodel.dart';
+import 'package:stokki/shoppinglist/shoppinglist.dart';
+import 'package:stokki/shoppinglist/shoppinglist_edit_viewmodel.dart';
 
-class ShoppingitemEditPage extends ConsumerStatefulWidget {
-  final int? shoppingitemId;
-  final int listId;
-
-  const ShoppingitemEditPage({super.key, required this.shoppingitemId, required this.listId});
+class ShoppinglistEditPage extends ConsumerStatefulWidget {
+  final int? shoppinglistId;
+  const ShoppinglistEditPage({super.key, required this.shoppinglistId});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ShoppingitemEditPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ShoppinglistEditPageState();
 }
 
-class _ShoppingitemEditPageState extends ConsumerState<ShoppingitemEditPage> {
-  get isNewShoppingitem => widget.shoppingitemId == null;
-  Shoppingitem? shoppingitem;
+class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
+  get isNewShoppinglist => widget.shoppinglistId == null;
+  Shoppinglist? shoppinglist;
   late final TextEditingController _titleController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -33,21 +31,21 @@ class _ShoppingitemEditPageState extends ConsumerState<ShoppingitemEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingitemAsync = ref.watch(shoppingitemEditViewModelProvider(widget.shoppingitemId));
+    final shoppinglistAsync = ref.watch(shoppinglistEditViewModelProvider(widget.shoppinglistId));
 
-    if (shoppingitem == null && shoppingitemAsync.hasValue) {
-      shoppingitem = shoppingitemAsync.value!.copyWith();
-      _titleController.text = shoppingitem!.title;
+    if (shoppinglist == null && shoppinglistAsync.hasValue) {
+      shoppinglist = shoppinglistAsync.value!.copyWith();
+      _titleController.text = shoppinglist!.title;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${isNewShoppingitem ? "Novo" : "Editar"} item'),
+        title: Text('${isNewShoppinglist ? "New" : "Edit"} Shoppinglist'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: shoppingitemAsync.when(
-          data: (originalShoppingitem) => _buildForm(context),
+        child: shoppinglistAsync.when(
+          data: (originalShoppinglist) => _buildForm(context),
           error: (error, stackTrace) => Text('Error: $error'),
           loading: () => const Center(child: CircularProgressIndicator()),
         ),
@@ -66,38 +64,26 @@ class _ShoppingitemEditPageState extends ConsumerState<ShoppingitemEditPage> {
               autofocus: true,
               controller: _titleController,
               decoration: const InputDecoration(
-                labelText: 'Nome do item',
+                labelText: 'Shoppinglist title',
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
-                shoppingitem = shoppingitem!.copyWith(title: value);
+                shoppinglist = shoppinglist!.copyWith(title: value);
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Por favor, insira um nome';
+                  return 'Please enter a title';
                 }
                 return null;
               },
             ),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Quantidade',
-                border: OutlineInputBorder(),
-              ),
-              initialValue: shoppingitem!.quantity?.toString() ?? '',
-              onChanged: (value) {
-                final quantity = int.tryParse(value);
-                shoppingitem = shoppingitem!.copyWith(quantity: quantity);
-              },
-            ),
             CheckboxListTile(
-              title: const Text('Comprado'),
-              value: shoppingitem!.isPurchased,
+              title: const Text('Is completed'),
+              value: shoppinglist!.isCompleted,
               controlAffinity: ListTileControlAffinity.leading,
               onChanged: (value) {
                 setState(() {
-                  shoppingitem = shoppingitem!.copyWith(isPurchased: value!);
+                  shoppinglist = shoppinglist!.copyWith(isCompleted: value!);
                 });
               },
             ),
@@ -114,27 +100,27 @@ class _ShoppingitemEditPageState extends ConsumerState<ShoppingitemEditPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () => _save(widget.listId),
-          child: Text(isNewShoppingitem ? 'Criar' : 'Salvar'),
+          onPressed: _save,
+          child: Text(isNewShoppinglist ? 'Create' : 'Save'),
         ),
         const SizedBox(width: 16),
         ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('Cancelar')),
+            child: const Text('Cancel')),
       ],
     );
   }
 
-  void _save(int listId) async {
+  void _save() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     final notifier =
-        ref.read(shoppingitemEditViewModelProvider(widget.shoppingitemId).notifier);
-    await notifier.updateState(shoppingitem!);
-    await notifier.save(listId);
+        ref.read(shoppinglistEditViewModelProvider(widget.shoppinglistId).notifier);
+    await notifier.updateState(shoppinglist!);
+    await notifier.save();
     if (mounted) {
       Navigator.of(context).pop(true);
     }

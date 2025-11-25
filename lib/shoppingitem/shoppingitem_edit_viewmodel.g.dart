@@ -52,7 +52,7 @@ final class ShoppingitemEditViewModelProvider
 }
 
 String _$shoppingitemEditViewModelHash() =>
-    r'7135d882c81c5a169ec0069696356d8e61e90781';
+    r'48b0e0c47e068249b2596624ea0197ca6c58a670';
 
 final class ShoppingitemEditViewModelFamily extends $Family
     with

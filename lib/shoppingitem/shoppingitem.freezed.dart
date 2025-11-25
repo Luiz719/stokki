@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Shoppingitem {
 
- int? get id; String get title; bool get isCompleted;
+ int? get id; int? get listId; String get title; int? get quantity; bool get isPurchased;
 /// Create a copy of Shoppingitem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ShoppingitemCopyWith<Shoppingitem> get copyWith => _$ShoppingitemCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shoppingitem&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shoppingitem&&(identical(other.id, id) || other.id == id)&&(identical(other.listId, listId) || other.listId == listId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isPurchased, isPurchased) || other.isPurchased == isPurchased));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isCompleted);
+int get hashCode => Object.hash(runtimeType,id,listId,title,quantity,isPurchased);
 
 @override
 String toString() {
-  return 'Shoppingitem(id: $id, title: $title, isCompleted: $isCompleted)';
+  return 'Shoppingitem(id: $id, listId: $listId, title: $title, quantity: $quantity, isPurchased: $isPurchased)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ShoppingitemCopyWith<$Res>  {
   factory $ShoppingitemCopyWith(Shoppingitem value, $Res Function(Shoppingitem) _then) = _$ShoppingitemCopyWithImpl;
 @useResult
 $Res call({
- int? id, String title, bool isCompleted
+ int? id, int? listId, String title, int? quantity, bool isPurchased
 });
 
 
@@ -65,11 +65,13 @@ class _$ShoppingitemCopyWithImpl<$Res>
 
 /// Create a copy of Shoppingitem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? title = null,Object? isCompleted = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? listId = freezed,Object? title = null,Object? quantity = freezed,Object? isPurchased = null,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,listId: freezed == listId ? _self.listId : listId // ignore: cast_nullable_to_non_nullable
 as int?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,isCompleted: null == isCompleted ? _self.isCompleted : isCompleted // ignore: cast_nullable_to_non_nullable
+as String,quantity: freezed == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int?,isPurchased: null == isPurchased ? _self.isPurchased : isPurchased // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -152,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String title,  bool isCompleted)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  int? listId,  String title,  int? quantity,  bool isPurchased)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Shoppingitem() when $default != null:
-return $default(_that.id,_that.title,_that.isCompleted);case _:
+return $default(_that.id,_that.listId,_that.title,_that.quantity,_that.isPurchased);case _:
   return orElse();
 
 }
@@ -173,10 +175,10 @@ return $default(_that.id,_that.title,_that.isCompleted);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String title,  bool isCompleted)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  int? listId,  String title,  int? quantity,  bool isPurchased)  $default,) {final _that = this;
 switch (_that) {
 case _Shoppingitem():
-return $default(_that.id,_that.title,_that.isCompleted);}
+return $default(_that.id,_that.listId,_that.title,_that.quantity,_that.isPurchased);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +192,10 @@ return $default(_that.id,_that.title,_that.isCompleted);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String title,  bool isCompleted)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  int? listId,  String title,  int? quantity,  bool isPurchased)?  $default,) {final _that = this;
 switch (_that) {
 case _Shoppingitem() when $default != null:
-return $default(_that.id,_that.title,_that.isCompleted);case _:
+return $default(_that.id,_that.listId,_that.title,_that.quantity,_that.isPurchased);case _:
   return null;
 
 }
@@ -205,12 +207,14 @@ return $default(_that.id,_that.title,_that.isCompleted);case _:
 @JsonSerializable()
 
 class _Shoppingitem implements Shoppingitem {
-  const _Shoppingitem({this.id, required this.title, this.isCompleted = false});
+  const _Shoppingitem({this.id, this.listId, required this.title, this.quantity, this.isPurchased = false});
   factory _Shoppingitem.fromJson(Map<String, dynamic> json) => _$ShoppingitemFromJson(json);
 
 @override final  int? id;
+@override final  int? listId;
 @override final  String title;
-@override@JsonKey() final  bool isCompleted;
+@override final  int? quantity;
+@override@JsonKey() final  bool isPurchased;
 
 /// Create a copy of Shoppingitem
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +229,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Shoppingitem&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Shoppingitem&&(identical(other.id, id) || other.id == id)&&(identical(other.listId, listId) || other.listId == listId)&&(identical(other.title, title) || other.title == title)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.isPurchased, isPurchased) || other.isPurchased == isPurchased));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isCompleted);
+int get hashCode => Object.hash(runtimeType,id,listId,title,quantity,isPurchased);
 
 @override
 String toString() {
-  return 'Shoppingitem(id: $id, title: $title, isCompleted: $isCompleted)';
+  return 'Shoppingitem(id: $id, listId: $listId, title: $title, quantity: $quantity, isPurchased: $isPurchased)';
 }
 
 
@@ -245,7 +249,7 @@ abstract mixin class _$ShoppingitemCopyWith<$Res> implements $ShoppingitemCopyWi
   factory _$ShoppingitemCopyWith(_Shoppingitem value, $Res Function(_Shoppingitem) _then) = __$ShoppingitemCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String title, bool isCompleted
+ int? id, int? listId, String title, int? quantity, bool isPurchased
 });
 
 
@@ -262,11 +266,13 @@ class __$ShoppingitemCopyWithImpl<$Res>
 
 /// Create a copy of Shoppingitem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? title = null,Object? isCompleted = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? listId = freezed,Object? title = null,Object? quantity = freezed,Object? isPurchased = null,}) {
   return _then(_Shoppingitem(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,listId: freezed == listId ? _self.listId : listId // ignore: cast_nullable_to_non_nullable
 as int?,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,isCompleted: null == isCompleted ? _self.isCompleted : isCompleted // ignore: cast_nullable_to_non_nullable
+as String,quantity: freezed == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int?,isPurchased: null == isPurchased ? _self.isPurchased : isPurchased // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

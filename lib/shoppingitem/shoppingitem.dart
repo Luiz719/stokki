@@ -7,13 +7,18 @@ part 'shoppingitem.g.dart';
 sealed class Shoppingitem with _$Shoppingitem {
   const factory Shoppingitem({
     int? id,
+    int? listId,
     required String title,
-    @Default(false) bool isCompleted,
+    int? quantity,
+    @Default(false) bool isPurchased,
   }) = _Shoppingitem;
 
   factory Shoppingitem.empty() => const Shoppingitem(
         id: null,
+        listId: null,
         title: '',
+        quantity: null,
+        isPurchased: false,
       );
 
   factory Shoppingitem.fromJson(Map<String, dynamic> json) => _$ShoppingitemFromJson(json);

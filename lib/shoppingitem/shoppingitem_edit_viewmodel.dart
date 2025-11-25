@@ -23,12 +23,13 @@ class ShoppingitemEditViewModel extends _$ShoppingitemEditViewModel {
     state = AsyncValue.data(shoppingitem);
   }
 
-  Future<void> save() async {
+  Future<void> save(int listId) async {
     state = const AsyncValue.loading();
 
     Shoppingitem shoppingitem = state.requireValue;
     final shoppingitemRepository = ref.read(shoppingitemRepositoryProvider);
     if (shoppingitem.id == null) {
+      shoppingitem = shoppingitem.copyWith(listId: listId);
       shoppingitem = await shoppingitemRepository.insert(shoppingitem);
     } else {
       await shoppingitemRepository.update(shoppingitem.id!, shoppingitem);
