@@ -114,7 +114,7 @@ class HomeScreen extends ConsumerWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'Nenhum item vencendo hoje',
+                              'Nenhum item irá vencer nos próximos dias',
                               style: theme.textTheme.bodyLarge,
                             ),
                           ],
