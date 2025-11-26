@@ -40,7 +40,7 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${isNewShoppinglist ? "New" : "Edit"} Shoppinglist'),
+        title: Text('${isNewShoppinglist ? "Nova" : "Editar"} Lista de Compras'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -64,7 +64,7 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
               autofocus: true,
               controller: _titleController,
               decoration: const InputDecoration(
-                labelText: 'Shoppinglist title',
+                labelText: 'Nome da lista',
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
@@ -72,13 +72,13 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a title';
+                  return 'Por favor, insira um nome!';
                 }
                 return null;
               },
             ),
             CheckboxListTile(
-              title: const Text('Is completed'),
+              title: const Text('Concluída'),
               value: shoppinglist!.isCompleted,
               controlAffinity: ListTileControlAffinity.leading,
               onChanged: (value) {
@@ -101,14 +101,14 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
       children: [
         ElevatedButton(
           onPressed: _save,
-          child: Text(isNewShoppinglist ? 'Create' : 'Save'),
+          child: Text(isNewShoppinglist ? 'Criar' : 'Salvar'),
         ),
         const SizedBox(width: 16),
         ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('Cancel')),
+            child: const Text('Cancelar')),
       ],
     );
   }

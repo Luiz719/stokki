@@ -56,7 +56,7 @@ class ShoppinglistListPage extends ConsumerWidget {
   Widget? _buildShoppinglistList(WidgetRef ref, List<Shoppinglist> list) {
     if (list.isEmpty) {
       return const Center(
-        child: Text('No shoppinglists found'),
+        child: Text('Não há listas de compras.'),
       );
     } else {
       return ListView.builder(
@@ -65,7 +65,7 @@ class ShoppinglistListPage extends ConsumerWidget {
           Shoppinglist shoppinglist = list[index];
           return ListTile(
             title: Text(shoppinglist.title),
-            subtitle: Text(shoppinglist.isCompleted ? 'Completed' : 'Not completed'),
+            subtitle: Text(shoppinglist.isCompleted ? 'Concluída' : 'Não concluída'),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -73,14 +73,14 @@ class ShoppinglistListPage extends ConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Delete Shoppinglist'),
-                    content: const Text('Are you sure?'),
+                    title: const Text('Excluir Lista de Compras'),
+                    content: const Text('Tem certeza?'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Cancel'),
+                        child: const Text('Cancelar'),
                       ),
                       TextButton(
                         onPressed: () {
@@ -89,7 +89,7 @@ class ShoppinglistListPage extends ConsumerWidget {
                               .read(shoppinglistListViewModelProvider.notifier)
                               .delete(shoppinglist);
                         },
-                        child: const Text('Delete'),
+                        child: const Text('Apagar'),
                       ),
                     ],
                   ),
