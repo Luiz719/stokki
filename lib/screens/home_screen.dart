@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stokki/pantryitem/pantryitem_list_page.dart';
 import 'package:stokki/shoppinglist/shoppinglist_list_page.dart';
 import 'theme_provider.dart';
 
@@ -74,7 +75,14 @@ class HomeScreen extends ConsumerWidget {
                       subtitle: 'Gerencie estoque e validades',
                       icon: Icons.kitchen_rounded,
                       color: Colors.teal,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const PantryItemListPage(),
+                          ),
+                        );
+                      },
                     ),
 
                     const SizedBox(height: 20),

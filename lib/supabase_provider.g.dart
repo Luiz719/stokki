@@ -8,20 +8,13 @@ part of 'supabase_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Provider que fornece a instância do cliente Supabase para toda a aplicação.
-/// Como o Supabase é inicializado no main(), aqui apenas retornamos a instância.
 
 @ProviderFor(supabase)
 const supabaseProvider = SupabaseProvider._();
 
-/// Provider que fornece a instância do cliente Supabase para toda a aplicação.
-/// Como o Supabase é inicializado no main(), aqui apenas retornamos a instância.
-
 final class SupabaseProvider
     extends $FunctionalProvider<SupabaseClient, SupabaseClient, SupabaseClient>
     with $Provider<SupabaseClient> {
-  /// Provider que fornece a instância do cliente Supabase para toda a aplicação.
-  /// Como o Supabase é inicializado no main(), aqui apenas retornamos a instância.
   const SupabaseProvider._()
     : super(
         from: null,
