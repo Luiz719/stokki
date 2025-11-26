@@ -99,7 +99,7 @@ class ShoppinglistListPage extends ConsumerWidget {
             onTap: () async {
               final saved = await Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ShoppingitemListPage(shoppinglistId: shoppinglist.id!),
+                  builder: (context) => ShoppingitemListPage(shoppinglistId: shoppinglist.id!, listTitle: shoppinglist.title),
                 ),
               );
               if (saved == true) {

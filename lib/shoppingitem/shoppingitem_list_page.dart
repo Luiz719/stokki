@@ -6,7 +6,9 @@ import 'package:stokki/shoppingitem/shoppingitem.dart';
 
 class ShoppingitemListPage extends ConsumerWidget {
   final int shoppinglistId;
-  const ShoppingitemListPage({super.key, required this.shoppinglistId});
+  final String listTitle;
+
+  const ShoppingitemListPage({super.key, required this.shoppinglistId, required this.listTitle});
 
   void _onUpdate(WidgetRef ref) {
     ref.invalidate(shoppingitemListViewModelProvider);
@@ -17,7 +19,7 @@ class ShoppingitemListPage extends ConsumerWidget {
     final shoppingitemList = ref.watch(shoppingitemListViewModelProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Compras'),
+        title: Text(listTitle),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
