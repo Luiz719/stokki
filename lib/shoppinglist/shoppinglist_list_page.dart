@@ -35,10 +35,10 @@ class ShoppinglistListPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final saved = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) =>
-                  const ShoppinglistEditPage(shoppinglistId: null),
+          final saved = await showDialog<bool>(
+            context: context,
+            builder: (context) => ShoppinglistEditPage(
+              shoppinglistId: null, // ou o ID correto se for edição
             ),
           );
           if (saved == true) {
@@ -135,11 +135,10 @@ class ShoppinglistListPage extends ConsumerWidget {
             },
             onEdit: () async {
               // Navega para edição da lista (nome, cor, etc)
-              final saved = await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      ShoppinglistEditPage(shoppinglistId: shoppinglist.id),
-                ),
+              final saved = await showDialog<bool>(
+                context: context,
+                builder: (context) =>
+                    ShoppinglistEditPage(shoppinglistId: shoppinglist.id),
               );
               if (saved == true) _onUpdate(ref);
             },
