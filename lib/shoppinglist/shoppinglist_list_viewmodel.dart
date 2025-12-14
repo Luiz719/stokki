@@ -11,7 +11,7 @@ class ShoppinglistListViewModel extends _$ShoppinglistListViewModel {
     return ref.watch(shoppinglistRepositoryProvider).find();
   }
 
-Future<void> addList(String name) async {
+  Future<void> addList(String name) async {
     final repository = ref.read(shoppinglistRepositoryProvider);
     // Otimistic Update ou Reload: aqui faremos reload simples para garantir consistência
     await repository.createList(name);
@@ -24,5 +24,15 @@ Future<void> addList(String name) async {
     ref.invalidateSelf();
   }
 
-  
+  Future<void> save(Shoppinglist shoppinglist) async {
+    state = const AsyncValue.loading();
+    final shoppinglistRepository = ref.read(shoppinglistRepositoryProvider);
+    if (shoppinglist.id == null) {
+      shoppinglist = await shoppinglistRepository.insert(shoppinglist);
+    } else {
+      await shoppinglistRepository.update(shoppinglist.id!, shoppinglist);
+    }
+    ref.invalidateSelf();
+  }
 }
+  
