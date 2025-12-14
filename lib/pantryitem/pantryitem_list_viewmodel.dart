@@ -16,4 +16,16 @@ class PantryItemListViewModel extends _$PantryItemListViewModel {
     await ref.read(pantryitemRepositoryProvider).delete(pantryitem.id!);
     ref.invalidateSelf();
   }
+
+    Future<void> save(PantryItem pantryitem) async {
+    state = const AsyncValue.loading();
+
+    final pantryitemRepository = ref.read(pantryitemRepositoryProvider);
+    if (pantryitem.id == null) {
+      pantryitem = await pantryitemRepository.insert(pantryitem);
+    } else {
+      await pantryitemRepository.update(pantryitem.id!, pantryitem);
+    }
+    ref.invalidateSelf();
+  }
 }
