@@ -52,7 +52,7 @@ final class PantryItemEditViewModelProvider
 }
 
 String _$pantryItemEditViewModelHash() =>
-    r'3f5b9e26d23cd38cac9b71e446af3f093a43213c';
+    r'2b4cb3250bd2e1771d4a922b24f0a6d8abb60664';
 
 final class PantryItemEditViewModelFamily extends $Family
     with

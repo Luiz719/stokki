@@ -11,7 +11,7 @@ _Shoppingitem _$ShoppingitemFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt(),
       listId: (json['listId'] as num?)?.toInt(),
       title: json['title'] as String,
-      quantity: (json['quantity'] as num?)?.toInt(),
+      quantity: (json['quantity'] as num?)?.toInt() ?? 1,
       isPurchased: json['isPurchased'] as bool? ?? false,
     );
 

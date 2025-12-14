@@ -85,9 +85,9 @@ class _ShoppingitemEditPageState extends ConsumerState<ShoppingitemEditPage> {
                 labelText: 'Quantidade',
                 border: OutlineInputBorder(),
               ),
-              initialValue: shoppingitem!.quantity?.toString() ?? '',
+              initialValue: shoppingitem!.quantity.toString(),
               onChanged: (value) {
-                final quantity = int.tryParse(value);
+                final quantity = int.tryParse(value) ?? 1;
                 shoppingitem = shoppingitem!.copyWith(quantity: quantity);
               },
             ),

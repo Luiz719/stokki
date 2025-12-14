@@ -34,7 +34,7 @@ final class PantryItemListViewModelProvider
 }
 
 String _$pantryItemListViewModelHash() =>
-    r'802113ae41db9d2773132126871bf9c408e27096';
+    r'4981eefec7059bb41ae3cbb38e6628c4b2378db6';
 
 abstract class _$PantryItemListViewModel
     extends $AsyncNotifier<List<PantryItem>> {

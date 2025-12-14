@@ -9,7 +9,7 @@ sealed class Shoppingitem with _$Shoppingitem {
     int? id,
     int? listId,
     required String title,
-    int? quantity,
+    @Default(1) int quantity,
     @Default(false) bool isPurchased,
   }) = _Shoppingitem;
 
@@ -17,7 +17,7 @@ sealed class Shoppingitem with _$Shoppingitem {
         id: null,
         listId: null,
         title: '',
-        quantity: null,
+        quantity: 1,
         isPurchased: false,
       );
 

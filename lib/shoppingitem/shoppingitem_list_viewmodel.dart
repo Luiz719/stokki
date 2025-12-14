@@ -16,4 +16,17 @@ class ShoppingitemListViewModel extends _$ShoppingitemListViewModel {
     await ref.read(shoppingitemRepositoryProvider).delete(shoppingitem.id!);
     ref.invalidateSelf();
   }
+
+  Future<void> save(Shoppingitem shoppingitem, int listId) async {
+    state = const AsyncValue.loading();
+
+    final shoppingitemRepository = ref.read(shoppingitemRepositoryProvider);
+    if (shoppingitem.id == null) {
+      shoppingitem = shoppingitem.copyWith(listId: listId);
+      shoppingitem = await shoppingitemRepository.insert(shoppingitem);
+    } else {
+      await shoppingitemRepository.update(shoppingitem.id!, shoppingitem);
+    }
+    ref.invalidateSelf();
+  }
 }

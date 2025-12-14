@@ -35,7 +35,7 @@ final class ShoppinglistListViewModelProvider
 }
 
 String _$shoppinglistListViewModelHash() =>
-    r'199cb038acd22ddf41c47f4afeaece6efbc61bb6';
+    r'e0d55c6cae296edddbe66e3fb7161fa885c8457e';
 
 abstract class _$ShoppinglistListViewModel
     extends $AsyncNotifier<List<Shoppinglist>> {
