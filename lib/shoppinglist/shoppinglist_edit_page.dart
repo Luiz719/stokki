@@ -33,9 +33,7 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
   Widget build(BuildContext context) {
     final shoppinglistAsync = ref.watch(shoppinglistEditViewModelProvider(widget.shoppinglistId));
 
-    // Inicializa os dados quando carregado
     if (shoppinglist == null && shoppinglistAsync.hasValue) {
-      // Cria uma cópia local para edição para não alterar o estado global antes de salvar
       shoppinglist = shoppinglistAsync.value!.copyWith();
       _titleController.text = shoppinglist!.title;
     }
@@ -65,7 +63,7 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
             Navigator.of(context).pop(false);
           },
           style: TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.onSurface.withAlpha(150), // Uso do withAlpha
+            foregroundColor: Theme.of(context).colorScheme.onSurface.withAlpha(150), 
           ),
           child: const Text('Cancelar'),
         ),
@@ -170,7 +168,7 @@ class _ShoppinglistEditPageState extends ConsumerState<ShoppinglistEditPage> {
       await notifier.save();
 
       if (mounted) {
-        Navigator.of(context).pop(true); // Retorna true indicando sucesso
+        Navigator.of(context).pop(true); 
       }
     } catch (e) {
       if (mounted) {

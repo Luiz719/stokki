@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:stokki/supabase_provider.dart';
 import 'package:stokki/pantryitem/pantryitem.dart';
@@ -20,7 +19,7 @@ class PantryItemRepository {
   }
 
   Future<List<PantryItem>> find() async {
-    final results = await _supabase.from('PantryItem').select();
+    final results = await _supabase.from('PantryItem').select().order('created_at');
     return results.map((doc) => PantryItem.fromDocument(doc)).toList();
   }
 

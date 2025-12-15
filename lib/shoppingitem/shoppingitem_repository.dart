@@ -19,12 +19,7 @@ class ShoppingitemRepository {
   }
 
   Future<List<Shoppingitem>> find() async {
-    final results = await _supabase.from('ShoppingItem').select();
-    return results.map((doc) => Shoppingitem.fromDocument(doc)).toList();
-  }
-
-  Future<List<Shoppingitem>> findByListId(int listId) async {
-    final results = await _supabase.from('ShoppingItem').select().eq('listId', listId);
+    final results = await _supabase.from('ShoppingItem').select().order('created_at');
     return results.map((doc) => Shoppingitem.fromDocument(doc)).toList();
   }
 

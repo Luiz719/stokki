@@ -85,9 +85,10 @@ class PantryItemListPage extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 80),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5, 
-        childAspectRatio: 1.70, 
-        crossAxisSpacing: 6,
-        mainAxisSpacing: 6,
+        childAspectRatio:
+            1.7, 
+        crossAxisSpacing: 3,
+        mainAxisSpacing: 3,
       ),
       itemCount: list.length,
       itemBuilder: (context, index) {
@@ -149,7 +150,6 @@ class PantryItemListPage extends ConsumerWidget {
   }
 }
 
-// --- WIDGET DO CARD EM GRADE ---
 
 class _PantryItemCard extends StatelessWidget {
   final PantryItem item;
@@ -174,46 +174,85 @@ class _PantryItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final hasExpiration = item.expirationDate != null;
+    final now = DateTime.now();
 
-    final isExpired =
-        hasExpiration && item.expirationDate!.isBefore(DateTime.now());
+    bool isExpired = false;
+    bool isExpiringSoon = false;
+
+    if (hasExpiration) {
+      final expiration = DateTime(
+        item.expirationDate!.year,
+        item.expirationDate!.month,
+        item.expirationDate!.day,
+      );
+      final today = DateTime(now.year, now.month, now.day);
+
+      final difference = expiration.difference(today).inDays;
+
+      if (expiration.isBefore(today)) {
+        isExpired = true; 
+      } else if (difference <= 5) {
+        isExpiringSoon = true; 
+      }
+    }
+
+    Color statusColorBg = theme.colorScheme.surfaceContainerHighest;
+    Color statusColorText = theme.colorScheme.onSurfaceVariant;
+    Color statusIconColor = theme.colorScheme.primary;
+
+    if (isExpired) {
+      statusColorBg = Colors.red.withAlpha(50);
+      statusColorText = Colors.red;
+      statusIconColor = Colors.red;
+    } else if (isExpiringSoon) {
+      statusColorBg = Colors.amber.withAlpha(50); 
+      statusColorText = Colors.orange.shade800; 
+      statusIconColor = Colors.orange.shade800;
+    }
 
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      clipBehavior: Clip
-          .antiAlias, 
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.all(6.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Título e Ícone de Delete
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // 1. Topo: Título Centralizado + Delete Button
+              Stack(
+                alignment: Alignment.topCenter,
                 children: [
-                  Expanded(
+                  // Botão Delete 
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      onTap: onDelete,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.delete_outline_rounded,
+                          size: 20,
+                          color: theme.colorScheme.error.withAlpha(150),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Título 
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: Text(
                       item.title,
+                      textAlign: TextAlign.center,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900, 
+                        fontSize: 14, 
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: onDelete,
-                    borderRadius: BorderRadius.circular(12),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.delete_outline_rounded,
-                        size: 20,
-                        color: theme.colorScheme.error.withAlpha(150),
-                      ),
                     ),
                   ),
                 ],
@@ -221,43 +260,57 @@ class _PantryItemCard extends StatelessWidget {
 
               const Spacer(),
 
-              // 2. Data de Validade (Se houver)
+              // 2. Data de Validade 
               if (hasExpiration) ...[
                 Container(
+                  width: double.infinity,
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
+                    horizontal: 4,
+                    vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: isExpired
-                        ? Colors.redAccent.withAlpha(30)
-                        : theme.colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(8),
+                    color: statusColorBg,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Column(
                     children: [
-                      Icon(
-                        Icons.calendar_today_rounded,
-                        size: 12,
-                        color: isExpired
-                            ? Colors.red
-                            : theme.colorScheme.primary,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.calendar_month_rounded,
+                            size: 16,
+                            color: statusIconColor,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            isExpired
+                                ? "VENCIDO"
+                                : (isExpiringSoon
+                                      ? "VENCE EM BREVE"
+                                      : "VENCIMENTO"),
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: statusColorText,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(height: 2),
                       Text(
                         _formatDate(item.expirationDate!),
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: isExpired
-                              ? Colors.red
-                              : theme.colorScheme.onSurfaceVariant,
-                          fontWeight: FontWeight.w600,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          color: statusColorText,
+                          fontWeight: FontWeight.bold, 
+                          fontSize: 12, 
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 12),
               ],
 
               // 3. Controles de Quantidade
@@ -266,8 +319,9 @@ class _PantryItemCard extends StatelessWidget {
                   color: theme.colorScheme.surfaceContainerHighest.withAlpha(
                     100,
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(24),
                 ),
+                padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -280,7 +334,10 @@ class _PantryItemCard extends StatelessWidget {
                     ),
                     Text(
                       '${item.quantity}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     _SmallIconButton(
                       icon: Icons.add,
@@ -315,8 +372,8 @@ class _SmallIconButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Padding(
-        padding: const EdgeInsets.all(4.0), // Touch target maior
-        child: Icon(icon, size: 18, color: color),
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(icon, size: 20, color: color),
       ),
     );
   }

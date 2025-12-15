@@ -19,7 +19,7 @@ class ShoppinglistListPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: theme
-          .scaffoldBackgroundColor, // Usa a cor de fundo do tema (cinza claro/escuro)
+          .scaffoldBackgroundColor, 
       appBar: AppBar(
         title: const Text(
           'Listas de Compras',
@@ -27,7 +27,7 @@ class ShoppinglistListPage extends ConsumerWidget {
         ),
         centerTitle: false,
         elevation: 0,
-        backgroundColor: Colors.transparent, // AppBar moderna transparente
+        backgroundColor: Colors.transparent, 
         titleTextStyle: theme.textTheme.headlineSmall?.copyWith(
           color: theme.colorScheme.onSurface,
           fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class ShoppinglistListPage extends ConsumerWidget {
           final saved = await showDialog<bool>(
             context: context,
             builder: (context) => ShoppinglistEditPage(
-              shoppinglistId: null, // ou o ID correto se for edição
+              shoppinglistId: null, 
             ),
           );
           if (saved == true) {
@@ -121,7 +121,6 @@ class ShoppinglistListPage extends ConsumerWidget {
           return _ShoppingListCard(
             shoppinglist: shoppinglist,
             onTap: () async {
-              // Navega para os itens da lista
               final saved = await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ShoppingitemListPage(
@@ -130,11 +129,9 @@ class ShoppinglistListPage extends ConsumerWidget {
                   ),
                 ),
               );
-              // Atualiza se houver retorno (ex: itens modificados alteraram o status da lista)
               if (saved == true) _onUpdate(ref);
             },
             onEdit: () async {
-              // Navega para edição da lista (nome, cor, etc)
               final saved = await showDialog<bool>(
                 context: context,
                 builder: (context) =>
@@ -146,13 +143,11 @@ class ShoppinglistListPage extends ConsumerWidget {
               _showDeleteDialog(context, ref, shoppinglist);
             },
             onToggleStatus: (bool? value) {
-              // Lógica para atualizar o status no banco
-              // Clona o objeto com o novo status
+
               final updatedList = shoppinglist.copyWith(
                 isCompleted: value ?? false,
               );
 
-              // Chama o método de salvar/atualizar do ViewModel
               ref
                   .read(shoppinglistListViewModelProvider.notifier)
                   .save(updatedList);
@@ -195,7 +190,6 @@ class ShoppinglistListPage extends ConsumerWidget {
   }
 }
 
-// --- WIDGET DO CARD SEPARADO PARA ORGANIZAÇÃO E DESIGN ---
 
 class _ShoppingListCard extends StatelessWidget {
   final Shoppinglist shoppinglist;
@@ -220,16 +214,16 @@ class _ShoppingListCard extends StatelessWidget {
     return Card(
       elevation: isCompleted
           ? 0
-          : 2, // Remove sombra se completado para "apagar" visualmente
+          : 2, 
       color: isCompleted
-          ? theme.colorScheme.surfaceContainerHighest.withOpacity(0.5)
+          ? theme.colorScheme.surfaceContainerHighest.withAlpha(128)
           : theme.cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: isCompleted
             ? BorderSide.none
             : BorderSide(
-                color: theme.colorScheme.outlineVariant.withOpacity(0.5),
+                color: theme.colorScheme.outlineVariant.withAlpha(128),
               ),
       ),
       margin: EdgeInsets.zero,
@@ -303,7 +297,7 @@ class _ShoppingListCard extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete_outline_rounded),
-                    color: Colors.redAccent.withOpacity(0.8),
+                    color: Colors.redAccent.withAlpha(204),
                     tooltip: 'Excluir lista',
                     onPressed: onDelete,
                   ),

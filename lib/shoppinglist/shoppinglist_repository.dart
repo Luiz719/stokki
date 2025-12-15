@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:stokki/shoppingitem/shoppingitem.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:stokki/supabase_provider.dart';
 import 'package:stokki/shoppinglist/shoppinglist.dart';
@@ -48,33 +47,6 @@ class ShoppinglistRepository {
     return Shoppinglist.fromJson(response);
   }
 
-  // --- Itens ---
-  Future<List<Shoppingitem>> getItems(String listId) async {
-    final response = await _supabase
-        .from('ShoppingItem')
-        .select()
-        .eq('listId', listId)
-        .order('created_at');
-    return (response as List).map((e) => Shoppingitem.fromJson(e)).toList();
-  }
-
-  Future<void> addItem(String listId, String name) async {
-    await _supabase.from('ShoppingItem').insert({
-      'listId': listId,
-      'title': name,
-      'isPurchased': false,
-    });
-  }
-
-  Future<void> toggleItem(String itemId, bool currentValue) async {
-    await _supabase
-        .from('ShoppingItem')
-        .update({'isPurchased': !currentValue}).eq('id', itemId);
-  }
-  
-   Future<void> deleteItem(String itemId) async {
-    await _supabase.from('ShoppingItem').delete().eq('id', itemId);
-  }
 }
 
 @riverpod
