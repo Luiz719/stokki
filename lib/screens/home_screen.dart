@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:stokki/pantryitem/pantryitem_list_page.dart';
 import 'package:stokki/shoppinglist/shoppinglist_list_page.dart';
 import 'theme_provider.dart';
@@ -108,22 +109,21 @@ class HomeScreen extends ConsumerWidget {
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surfaceContainerHighest,
+                          color: theme.colorScheme.surfaceContainerHighest
+                              .withAlpha(128),
                           borderRadius: BorderRadius.circular(24),
                         ),
                         padding: const EdgeInsets.all(24),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(
-                              Icons.insights,
-                              size: 40,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Nenhum item irá vencer nos próximos dias',
-                              style: theme.textTheme.bodyLarge,
+                            Flexible(
+                              child: Lottie.asset(
+                                '../assets/lottie/shopping-cart2.json',
+                                width: 200,
+                                fit: BoxFit.contain,
+                                repeat: true,
+                              ),
                             ),
                           ],
                         ),
