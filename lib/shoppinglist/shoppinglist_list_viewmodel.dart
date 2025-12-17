@@ -11,13 +11,6 @@ class ShoppinglistListViewModel extends _$ShoppinglistListViewModel {
     return ref.watch(shoppinglistRepositoryProvider).find();
   }
 
-  Future<void> addList(String name) async {
-    final repository = ref.read(shoppinglistRepositoryProvider);
-    // Otimistic Update ou Reload: aqui faremos reload simples para garantir consistência
-    await repository.createList(name);
-    ref.invalidateSelf(); // Força recarregar a lista
-  }
-
   Future<void> delete(Shoppinglist shoppinglist) async {
     state = const AsyncValue.loading();
     await ref.read(shoppinglistRepositoryProvider).delete(shoppinglist.id!);

@@ -216,7 +216,7 @@ class _PantryItemEditPageState extends ConsumerState<PantryItemEditPage> {
                 child: TextFormField(
                   controller: _dateController,
                   readOnly:
-                      true, // Impede digitar texto livre, força usar o picker
+                      true, 
                   onTap: () => _pickDate(context),
                   decoration: InputDecoration(
                     labelText: 'Validade',

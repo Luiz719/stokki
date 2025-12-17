@@ -220,7 +220,7 @@ class _PantryItemCard extends StatelessWidget {
           padding: const EdgeInsets.all(6.0),
           child: Column(
             children: [
-              // 1. Topo: Título Centralizado + Delete Button
+              // 1. Título + Delete Button
               Stack(
                 alignment: Alignment.topCenter,
                 children: [

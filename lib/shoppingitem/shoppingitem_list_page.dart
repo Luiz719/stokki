@@ -162,7 +162,6 @@ if (list.isEmpty) {
   }
 }
 
-// --- CARD WIDGET CUSTOMIZADO ---
 
 class _ShoppingItemCard extends StatelessWidget {
   final Shoppingitem item;
@@ -205,7 +204,7 @@ class _ShoppingItemCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              // 1. Checkbox à Esquerda
+              // 1. Checkbox 
               Transform.scale(
                 scale: 1.1,
                 child: Checkbox(
@@ -218,7 +217,7 @@ class _ShoppingItemCard extends StatelessWidget {
               
               const SizedBox(width: 8),
 
-              // 2. Título e Subtítulo (Texto)
+              // 2. Título e Subtítulo 
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,7 +246,7 @@ class _ShoppingItemCard extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Lógica de Quantidade: Só exibe controles se NÃO estiver comprado
+                  // Só exibe controles se não estiver comprado
                   if (!isPurchased) ...[
                     Container(
                       decoration: BoxDecoration(

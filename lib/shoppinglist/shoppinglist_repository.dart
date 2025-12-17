@@ -37,16 +37,6 @@ class ShoppinglistRepository {
   Future<void> delete(int id) async {
     await _supabase.from('ShoppingList').delete().eq('id', id);
   }
-
-  Future<Shoppinglist> createList(String name) async {
-    final response = await _supabase
-        .from('ShoppingList')
-        .insert({'title': name})
-        .select()
-        .single();
-    return Shoppinglist.fromJson(response);
-  }
-
 }
 
 @riverpod
